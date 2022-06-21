@@ -38,7 +38,25 @@ def requests_data(web_url):
     return list_post
 
 
-def show_data(list_post):
+def check_page_num(number):
+    if number == 0:
+        return False
+    else:
+        return True
+
+
+def res_page_num(number, check):
+    if check:
+        number[0] += 1
+    else:
+        number[0] -= 1
+
+
+def show_data(web_url):
+    list_post = requests_data(web_url)
+    web_url_change = web_url[:len(web_url) - 1]
+    pos_page = [1]
+
     win = tk.Tk()
     win.title("Web Data")
     win.geometry("1200x550")
@@ -66,6 +84,33 @@ def show_data(list_post):
                      values=(
                          str(i), list_post[i].get_title(), str(list_post[i].get_point()), list_post[i].get_creator(),
                          (list_post[i].get_comments())))
+
+    def show_next_table():
+        res_page_num(pos_page, True)
+        table.delete(*table.get_children())  # Xoa het du lieu cua table
+        list_post_next = requests_data(web_url_change + str(pos_page[0]))
+        for j in range(len(list_post_next)):
+            table.insert(parent='', index='end', iid=j + 1, text='',
+                         values=(
+                             str(j), list_post_next[j].get_title(), str(list_post_next[j].get_point()),
+                             list_post_next[j].get_creator(),
+                             (list_post_next[j].get_comments())))
+
+    def show_previous_table():
+        if pos_page[0] != 1:
+            res_page_num(pos_page, False)
+            table.delete(*table.get_children())  # Xoa het du lieu cua table
+            list_post_pre = requests_data(web_url_change + str(pos_page[0]))
+            for j in range(len(list_post_pre)):
+                table.insert(parent='', index='end', iid=j + 1, text='',
+                             values=(
+                                 str(j), list_post_pre[j].get_title(), str(list_post_pre[j].get_point()),
+                                 list_post_pre[j].get_creator(),
+                                 (list_post_pre[j].get_comments())))
+
+    butt_next = tk.Button(win, text="Next page", width=40, command=show_next_table)
+    butt_next.place(x=600, y=430)
+    butt_back = tk.Button(win, text="Previous page", width=40, command=show_previous_table)
+    butt_back.place(x=300, y=430)
     table.pack()
     win.mainloop()
-
