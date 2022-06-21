@@ -96,12 +96,7 @@ def show_data(web_url):
         table.delete(*table.get_children())  # Xoa het du lieu cua table
         list_post_next = requests_data(web_url_change + str(pos_page[0]))
         refill_table(list_post_next)
-        # for j in range(len(list_post_next)):
-        #     table.insert(parent='', index='end', iid=j, text='',
-        #                  values=(
-        #                      str(j), list_post_next[j].get_title(), str(list_post_next[j].get_point()),
-        #                      list_post_next[j].get_creator(),
-        #                      (list_post_next[j].get_comments())))
+   
 
     def show_previous_table():
         if pos_page[0] != 1:
@@ -109,12 +104,6 @@ def show_data(web_url):
             table.delete(*table.get_children())  # Xoa het du lieu cua table
             list_post_pre = requests_data(web_url_change + str(pos_page[0]))
             refill_table(list_post_pre)
-            # for j in range(len(list_post_pre)):
-            #     table.insert(parent='', index='end', iid=j, text='',
-            #                  values=(
-            #                      str(j), list_post_pre[j].get_title(), str(list_post_pre[j].get_point()),
-            #                      list_post_pre[j].get_creator(),
-            #                      (list_post_pre[j].get_comments())))
 
     butt_next = tk.Button(win, text="Next page", width=40, command=show_next_table)
     butt_next.place(x=600, y=430)
