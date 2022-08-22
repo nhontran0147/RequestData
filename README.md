@@ -6,7 +6,7 @@
 *Nếu thiếu thư viện nào thì pip install <tên thư viện>
 
 ## Cài đặt nhanh toàn bộ thư viện có trong project
-- Anh có thể chạy dòng lệnh này
+- Có thể chạy dòng lệnh này
 ```
 pip install requests beautifulsoup4 tk
 ```
